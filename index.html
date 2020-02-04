@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="ru">
+  <head>
+    <meta charset="utf-8">
+    <title>Cat forum</title>
+    <link href="css/style.css" rel="stylesheet">
+  </head>
+  <body>
+    <div class="main" id="app">
+      <h1 class="visually-hidden">Cat Forum</h1>
+      <section class="filter">
+        <h2 class="visually-hidden">Filter</h2>
+        <form class="filter__form">
+          <h2 class="filter__header">Фильтры</h2>
+          <label class="filter__name-label" for="filter__name-input">Имя/название</label>
+          <input v-model="searchName" class="filter__name-input" type="text" name="filter__name-input" id="filter__name-input">
+          <label class="filter__content-label" for="filter__content-input">Контент</label>
+          <input v-model="searchBody" class="filter__content-input" type="text" name="filter__content-input" id="filter__content-input">
+        </form>
+      </section>
+      <section class="forum">
+        <h2 class="visually-hidden">Forum</h2>
+        <ul class="forum__post-list">
+          <li v-for="(user, index) in filteredPosts" class="forum__post">
+            <div class="forum__post-content">
+              <div class="forum__post-content-container">
+                <img class="forum__post-content-image" src="http://placekitten.com/100/100" width="100" height="100" alt="Author image">
+                <div class="forum__post-content-inner-container">
+                  <p class="forum__post-content-author">{{ user.name }}</p>
+                  <p class="forum__post-content-topic">{{ posts[index].title }}</p>
+                </div>
+              </div>
+              <p class="forum__post-content-text">{{ posts[index].body }}</p>
+              <button v-on:click="isVisible = !isVisible" v-if="isVisible" class="forum__post-button forum__post-button--show">Открыть комментарии</button> 
+            </div>
+            <div v-if="!isVisible" class="forum__post-comment-wrapper">
+              <ul class="forum__post-comment-list">
+                <li v-for="comment in comments" class="forum__post-comment">
+                  <div class="forum__post-comment-container">
+                    <img class="forum__post-comment-image" src="http://placekitten.com/40/60" width="40" height="60" alt="Author of comment image">
+                    <div class="forum__post-comment-inner-container">
+                      <div class="forum__post-comment-author-container">
+                        <p class="forum__post-comment-author">{{ comment.name }}</p>
+                        <p class="forum__post-comment-write">промурчал</p>
+                      </div>
+                      <p class="forum__post-comment-text">{{ comment.body }}</p>
+                    </div>
+                  </div>
+                </li>
+              </ul>
+              <button v-on:click="isVisible = !isVisible"class="forum__comment-button forum__comment-button--show">Скрыть комментарии</button>
+            </div>
+          </li>
+        </ul>
+      </section>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="app.js"></script>
+  </body>
+</html>
